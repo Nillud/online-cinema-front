@@ -8,7 +8,7 @@ type TypeAppProps = AppProps
 const MyApp = ({ Component, pageProps }: TypeAppProps) => {
 	return (
 		<MainProvider>
-			<Component {...pageProps} />
+				<Component {...pageProps} />
 		</MainProvider>
 	)
 }
