@@ -17,7 +17,7 @@ const MenuItem: FC<{ item: IMenuItem }> = ({ item }) => {
       })}
     >
       <Link href={item.link}>
-        <a href="">
+        <a href={item.link}>
           <MaterialIcon name={item.icon} />
           <span>{item.title}</span>
         </a>
