@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 
-import '../app/assets/styles/globals.scss'
+import '@/assets/styles/globals.scss'
 import MainProvider from 'providers/MainProvider'
 
 type TypeAppProps = AppProps
