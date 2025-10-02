@@ -1,10 +1,13 @@
-import { NextPage } from 'next'
+import Admin from '@/components/screens/admin/Admin'
+import { NextPageAuth } from '@/shared/types/auth.types'
 import React from 'react'
 
-const AdminPage: NextPage = () => {
+const AdminPage: NextPageAuth = () => {
   return (
-    <div>AdminPage</div>
+    <Admin />
   )
 }
+
+AdminPage.isOnlyAdmin = true
 
 export default AdminPage
