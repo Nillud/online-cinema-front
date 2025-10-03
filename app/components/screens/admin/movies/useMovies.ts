@@ -38,7 +38,7 @@ export const useMovies = () => {
         {
             onError: (error) => toastError(error, 'Delete movie'),
             onSuccess: () => {
-                toastr.success('delete was successful', 'Delete movie')
+                toastr.success('Delete movie', 'delete was successful')
                 queryData.refetch()
             }
         }

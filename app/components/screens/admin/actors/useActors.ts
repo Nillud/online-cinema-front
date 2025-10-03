@@ -37,7 +37,7 @@ export const useActors = () => {
         {
             onError: (error) => toastError(error, 'Delete actor'),
             onSuccess: () => {
-                toastr.success('delete was successful', 'Delete actor')
+                toastr.success('Delete actor', 'delete was successful')
                 queryData.refetch()
             }
         }

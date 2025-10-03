@@ -38,7 +38,7 @@ export const useUsers = () => {
         {
             onError: (error) => toastError(error, 'Delete user'),
             onSuccess: () => {
-                toastr.success('delete was successful', 'Delete user')
+                toastr.success('Delete user', 'delete was successful')
                 queryData.refetch()
             }
         }

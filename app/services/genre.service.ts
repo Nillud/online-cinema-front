@@ -1,3 +1,4 @@
+import { IGenreEditInput } from "@/components/screens/admin/genre/genre-edit.interface"
 import { IGenre } from "@/shared/types/movie.types"
 import axios, { axiosClassic } from "api/interceptors"
 import { getGenresUrl } from "config/api.config"
@@ -16,7 +17,15 @@ export const GenreService = {
         return axiosClassic.get<IGenre[]>(getGenresUrl('/popular'), {})
     },
 
-    async deleteGenre(_id: string) {
+    async getById(_id: string) {
+        return axios.get<IGenreEditInput>(getGenreUrl(`/${_id}`))
+    },
+
+    async update(_id: string, data: IGenreEditInput) {
+        return axios.put<string>(getGenreUrl(`/${_id}`), data)
+    },
+
+    async delete(_id: string) {
         return axios.delete<string>(getGenreUrl(`/${_id}`))
     }
 }

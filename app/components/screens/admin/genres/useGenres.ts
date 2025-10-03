@@ -33,11 +33,11 @@ export const useGenres = () => {
 
     const { mutateAsync: deleteAsync } = useMutation(
         'delete genre',
-        (genreId: string) => GenreService.deleteGenre(genreId),
+        (genreId: string) => GenreService.delete(genreId),
         {
             onError: (error) => toastError(error, 'Delete genre'),
             onSuccess: () => {
-                toastr.success('delete was successful', 'Delete genre')
+                toastr.success('Delete genre', 'delete was successful')
                 queryData.refetch()
             }
         }
