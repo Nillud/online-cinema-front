@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { IGenreEditInput } from './genre-edit.interface'
 import { useGenreEdit } from './useGenreEdit'
 import Meta from '@/utils/meta/Meta'
@@ -7,9 +7,25 @@ import AdminNavigation from '@/components/ui/admin-navigation/AdminNavigation'
 import Heading from '@/components/ui/heading/Heading'
 import SkeletonLoader from '@/components/ui/SkeletonLoader'
 import Field from '@/components/ui/form-elements/Field'
+import SlugField from '@/components/ui/form-elements/SlugField/SlugField'
+import generateSlug from '@/utils/string/generateSlug'
+import Button from '@/components/ui/form-elements/Button'
+
+import formStyles from '@/ui/form-elements/admin-form.module.scss'
+import { stripHtml } from 'string-strip-html'
+import dynamic from 'next/dynamic'
+
+const DynamicTextEditor = dynamic(() => import('@/components/ui/form-elements/TextEditor'), { ssr: false })
 
 const GenreEdit: FC = () => {
-    const { handleSubmit, register, formState: { errors }, setValue, getValues } = useForm<IGenreEditInput>({
+    const {
+        handleSubmit,
+        register,
+        formState: { errors },
+        setValue,
+        getValues,
+        control
+    } = useForm<IGenreEditInput>({
         mode: 'onChange'
     })
 
@@ -19,13 +35,16 @@ const GenreEdit: FC = () => {
         <Meta title='edit genre'>
             <AdminNavigation />
             <Heading title='Edit genre' />
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form
+                className={formStyles.form}
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 {
                     isLoading
                         ? <SkeletonLoader count={3} />
                         : (
                             <>
-                                <div>
+                                <div className={formStyles.fields}>
                                     <Field
                                         {...register(
                                             'name',
@@ -39,7 +58,11 @@ const GenreEdit: FC = () => {
                                     />
 
                                     <div style={{ width: '31%' }}>
-                                        {/* Slug field */}
+                                        <SlugField
+                                            register={register}
+                                            error={errors.slug}
+                                            generate={() => setValue('slug', generateSlug(getValues('name')))}
+                                        />
                                     </div>
 
                                     <Field
@@ -49,15 +72,33 @@ const GenreEdit: FC = () => {
                                                 required: 'Icon is required!'
                                             }
                                         )}
-                                        placeholder='Name'
+                                        placeholder='Icon'
                                         error={errors.icon}
                                         style={{ width: '31%' }}
                                     />
-
-                                    {/* Text editor draft.js */}
-
-                                    <button>Update</button>
                                 </div>
+
+                                <Controller
+                                    control={control}
+                                    name='description'
+                                    defaultValue=''
+                                    render={({
+                                        field: {
+                                            value,
+                                            onChange
+                                        },
+                                        fieldState: { error }
+                                    }) => <DynamicTextEditor onChange={onChange} value={value} error={error} placeholder='description' />}
+                                    rules={{
+                                        validate: {
+                                            required: (v) =>
+                                                (v && stripHtml(v).result.length > 0) ||
+                                                'Description is required!'
+                                        }
+                                    }}
+                                />
+
+                                <Button>Update</Button>
                             </>
                         )
                 }

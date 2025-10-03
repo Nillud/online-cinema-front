@@ -1,7 +1,6 @@
 import { IActor } from "@/shared/types/movie.types"
 import axios, { axiosClassic } from "api/interceptors"
 import { getActorsUrl } from "config/api.config"
-import { getActorUrl } from "config/url.config"
 
 export const ActorService = {
     async getAll(searchTerm?: string) {
@@ -13,6 +12,6 @@ export const ActorService = {
     },
 
     async deleteActor(_id: string) {
-        return axios.delete<string>(getActorUrl(`/${_id}`))
+        return axios.delete<string>(getActorsUrl(`/${_id}`))
     }
 }
