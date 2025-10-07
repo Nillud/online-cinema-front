@@ -22,7 +22,7 @@ const MovieList: FC = () => {
             <AdminTable
                 isLoading={isLoading}
                 removeHandler={deleteAsync}
-                headerItems={['Title', 'Genres', 'Rating']}
+                headerItems={['Title', 'Genres', 'Actors', 'Rating']}
                 tableItems={data || []}
             />
         </Meta>

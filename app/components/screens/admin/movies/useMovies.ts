@@ -1,7 +1,7 @@
 import { ITableItem } from "@/components/ui/admin-table/AdminTable/admin-table.interface"
 import { useDebounce } from "@/hooks/useDebounce"
 import { MovieService } from "@/services/movie.service"
-import { getGenresList } from "@/utils/movie/getGenresList"
+import { getList } from "@/utils/movie/getGenresList"
 import { toastError } from "@/utils/toast-error"
 import { getAdminUrl } from "config/url.config"
 import { useRouter } from "next/router"
@@ -22,7 +22,7 @@ export const useMovies = () => {
                     (movie): ITableItem => ({
                         _id: movie._id,
                         editUrl: getAdminUrl(`movie/edit/${movie._id}`),
-                        items: [movie.title, getGenresList(movie.genres), String(movie.rating)]
+                        items: [movie.title, getList(movie.genres), getList(movie.actors), String(movie.rating)]
                     })
                 ),
             onError: (error) => toastError(error, 'Movie list')
@@ -60,10 +60,10 @@ export const useMovies = () => {
     )
 
     return useMemo(() => ({
-        handleSearch, 
-        ...queryData, 
-        searchTerm, 
-        deleteAsync, 
+        handleSearch,
+        ...queryData,
+        searchTerm,
+        deleteAsync,
         createAsync
     }), [queryData, searchTerm, deleteAsync, createAsync])
 }
