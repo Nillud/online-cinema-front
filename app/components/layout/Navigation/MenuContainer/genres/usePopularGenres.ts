@@ -8,11 +8,18 @@ export const usePopularGenres = () => {
         'popular genre menu',
         () => GenreService.getPopularGenres(),
         {
-            select: ({ data }) => data.map(genre => ({
-                icon: genre.icon,
-                link: getGenreUrl(genre.slug),
-                title: genre.name
-            } as IMenuItem)).splice(0, 4),
+            select: ({ data }) =>
+                data
+                    .filter(genre => genre.icon)
+                    .map(
+                        genre =>
+                        ({
+                            icon: genre.icon,
+                            link: getGenreUrl(genre.slug),
+                            title: genre.name
+                        } as IMenuItem)
+                    )
+                    .splice(0, 4),
         }
     )
 

@@ -4,6 +4,7 @@ import { MovieService } from "@/services/movie.service"
 import { getGenresList } from "@/utils/movie/getGenresList"
 import { toastError } from "@/utils/toast-error"
 import { getAdminUrl } from "config/url.config"
+import { useRouter } from "next/router"
 import { ChangeEvent, useMemo, useState } from "react"
 import { useMutation, useQuery } from "react-query"
 import { toastr } from "react-redux-toastr"
@@ -32,9 +33,23 @@ export const useMovies = () => {
         setSearchTerm(e.target.value)
     }
 
+    const { push } = useRouter()
+
+    const { mutateAsync: createAsync } = useMutation(
+        'create movie',
+        () => MovieService.create(),
+        {
+            onError: (error) => toastError(error, 'Create movie'),
+            onSuccess: ({ data: _id }) => {
+                toastr.success('Create movie', 'create was successful')
+                push(getAdminUrl(`movie/edit/${_id}`))
+            }
+        }
+    )
+
     const { mutateAsync: deleteAsync } = useMutation(
         'delete movie',
-        (movieId: string) => MovieService.deleteMovie(movieId),
+        (movieId: string) => MovieService.delete(movieId),
         {
             onError: (error) => toastError(error, 'Delete movie'),
             onSuccess: () => {
@@ -45,6 +60,10 @@ export const useMovies = () => {
     )
 
     return useMemo(() => ({
-        handleSearch, ...queryData, searchTerm, deleteAsync
-    }), [queryData, searchTerm, deleteAsync])
+        handleSearch, 
+        ...queryData, 
+        searchTerm, 
+        deleteAsync, 
+        createAsync
+    }), [queryData, searchTerm, deleteAsync, createAsync])
 }
