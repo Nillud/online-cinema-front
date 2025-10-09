@@ -1,4 +1,4 @@
-export const getGenresListEach = (
+export const getListEach = (
     index: number,
     length: number,
     name: string
