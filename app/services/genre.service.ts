@@ -1,4 +1,5 @@
 import { IGenreEditInput } from "@/components/screens/admin/genre/genre-edit.interface"
+import { ICollection } from "@/components/screens/collections/collections.interface"
 import { IGenre } from "@/shared/types/movie.types"
 import axios, { axiosClassic } from "api/interceptors"
 import { getGenresUrl } from "config/api.config"
@@ -14,6 +15,10 @@ export const GenreService = {
 
     async getPopularGenres() {
         return axiosClassic.get<IGenre[]>(getGenresUrl('/popular'), {})
+    },
+
+    async getCollections() {
+        return axiosClassic.get<ICollection>(getGenresUrl(`/collections`))
     },
 
     async getBySlug(slug: string) {
