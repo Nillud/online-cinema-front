@@ -6,7 +6,7 @@ import { FormState, UseFormRegister } from 'react-hook-form'
 interface IAuthFields {
     register: UseFormRegister<any>
     formState: FormState<any>
-    isPasswordRequired: boolean
+    isPasswordRequired?: boolean
 }
 
 const AuthFields: FC<IAuthFields> = ({

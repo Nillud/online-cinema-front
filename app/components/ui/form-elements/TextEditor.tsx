@@ -40,6 +40,17 @@ const TextEditor: FC<ITextEditor> = ({
         return onChange(draftToHtml(convertToRaw(editorState.getCurrentContent())))
     }
 
+    const uploadImageCallBack = (file: any) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                resolve({ data: { link: e.target.result } }); // base64 image as link
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    };
+
     return (
         <div className={cn(styles.common, styles.editorWrapper, 'animate-fade')}>
             <label>
@@ -53,18 +64,11 @@ const TextEditor: FC<ITextEditor> = ({
                         onEditorStateChange={onEditorStateChange}
                         spellCheck
                         toolbar={{
-                            options: ['inline', 'list'],
-                            inline: {
-                                inDropdown: false,
-                                className: undefined,
-                                component: undefined,
-                                dropdownClassname: undefined,
-                                options: ['bold', 'italic', 'underline', 'strikethrough'],
+                            image: {
+                                uploadCallback: uploadImageCallBack,
+                                previewImage: true,
+                                alt: { present: true, mandatory: false },
                             },
-                            list: {
-                                inDropdown: false,
-                                options: ['unordered', 'ordered']
-                            }
                         }}
                     />
                 </div>
