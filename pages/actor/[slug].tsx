@@ -1,13 +1,13 @@
 import Catalog from "@/components/ui/catalog-movies/Catalog"
 import { ActorService } from "@/services/actor.service"
 import { MovieService } from "@/services/movie.service"
-import { IGenre, IMovie } from "@/shared/types/movie.types"
+import { IActor, IMovie } from "@/shared/types/movie.types"
 import { GetStaticPaths, GetStaticProps, NextPage } from "next"
 import Error404 from "../404"
 
 interface IActorPage {
     movies: IMovie[]
-    actor: IGenre | undefined
+    actor: IActor | undefined
 }
 
 const ActorPage: NextPage<IActorPage> = ({ movies, actor }) => {
@@ -16,7 +16,6 @@ const ActorPage: NextPage<IActorPage> = ({ movies, actor }) => {
             <Catalog
                 movies={movies || []}
                 title={actor.name}
-                description={actor.description}
             />
         )
         : (
