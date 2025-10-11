@@ -5,7 +5,13 @@ import { useQuery } from "react-query"
 import MovieList from "./MovieList"
 
 const PopularMovies: FC = () => {
-  const { isLoading, data: popularMovies } = useQuery('Popular movies in sidebar', () => MovieService.getMostPopularMovies())
+  const { isLoading, data: popularMovies } = useQuery(
+    'Popular movies in sidebar',
+    () => MovieService.getMostPopularMovies(),
+    {
+      select: (data) => data.slice(0, 3)
+    }
+  )
 
   return isLoading
     ? (

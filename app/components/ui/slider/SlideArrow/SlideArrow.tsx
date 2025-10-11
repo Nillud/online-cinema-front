@@ -26,6 +26,7 @@ const SlideArrow: FC<ISlideArrow> = ({
                     }
                 )
             }
+            aria-label={isLeft ? 'previous slide' : 'next slide'}
         >
             <MaterialIcon name={isLeft ? 'MdChevronLeft' : 'MdChevronRight'} />
         </button>

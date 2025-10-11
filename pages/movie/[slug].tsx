@@ -63,7 +63,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             props: {
                 similarMovies,
                 movie
-            }
+            },
+			revalidate: 60
         }
     } catch (error) {
         return {

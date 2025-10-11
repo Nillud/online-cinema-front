@@ -54,9 +54,7 @@ const UserEdit: FC = () => {
                                             </button>
                                         )
                                     }
-                                >
-
-                                </Controller>
+                                />
 
                                 <Button>Update</Button>
                             </>

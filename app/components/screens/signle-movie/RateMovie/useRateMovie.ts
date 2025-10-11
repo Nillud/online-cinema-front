@@ -1,9 +1,12 @@
+import { useAuth } from "@/hooks/useAuth"
 import { RatingService } from "@/services/rating.service"
 import { toastError } from "@/utils/toast-error"
 import { useState } from "react"
 import { useMutation, useQuery } from "react-query"
 
 export const useRateMovie = (movieId: string) => {
+    const { user } = useAuth()
+
     const [rating, setRating] = useState<number>(0)
     const [isSended, setIsSended] = useState<boolean>(false)
 
@@ -15,7 +18,7 @@ export const useRateMovie = (movieId: string) => {
                 setRating(data)
             },
             onError: (error) => toastError(error, 'Get rating'),
-            enabled: !!movieId
+            enabled: !!movieId && !!user
         }
     )
 
